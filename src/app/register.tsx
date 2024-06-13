@@ -28,7 +28,8 @@ export default function Register() {
             const registerResponse = await api.post(`/events/${EVENT_ID}/attendees`, { name, email })
 
             if (registerResponse.data.attendeeId) {
-                const badgeResponse = await api.post(`/attendees/${registerResponse.data.attendeeId}/badge`)
+                const badgeResponse = await api.get(`/attendees/${registerResponse.data.attendeeId}/badge`)
+                console.log(badgeResponse.data.badge)
                 
                 badgeStore.save(badgeResponse.data.badge)
 
@@ -43,6 +44,7 @@ export default function Register() {
                     return Alert.alert("Inscrição", "Este e-amil já está cadastrado!")
                 }
             }
+            console.log(error)
 
             return Alert.alert("Inscrição", "Não foi possível realizar a inscrição!")
         }
